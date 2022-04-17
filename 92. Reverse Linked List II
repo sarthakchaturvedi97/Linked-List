@@ -1,0 +1,58 @@
+class Solution {
+public:
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        if(left==right)
+            return head;
+        
+        ListNode *curr=head;
+        ListNode *m=NULL;
+        ListNode *n=NULL;
+        ListNode *a=NULL;
+        left--;
+        right--;
+        
+        while(curr)
+        {
+            if(left>0)
+                a=curr;
+            
+            
+            if(left==0&&!m)
+                m=curr;
+            
+            if(right==0&&!n)
+                n=curr;
+            
+            if(m&&n)
+                break;
+            
+            left--;
+            right--;
+            curr=curr->next;
+        }
+        
+        curr=m->next;
+        
+        ListNode *prev=m;
+        while(curr)
+        {
+            ListNode *k=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=k;
+            if(prev==n)
+                break;
+        }
+        if(a==NULL)
+        {
+            head=prev;
+        }
+        else
+        {
+            a->next=prev;
+        }
+        
+         m->next=curr;
+        return head;
+    }
+};
